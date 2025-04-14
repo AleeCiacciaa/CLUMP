@@ -309,58 +309,6 @@ def compare_integral_flux_background(F_INT_values, fluxes_background, discrepanc
     print()
     print(tabulate(df, headers="keys", tablefmt="grid", showindex=False, stralign="center"))
 
-#Funcion for background
-def find_background(x_values, y_values, region_radius_values, arcsec_per_pixel, data, F_INT_values, fluxes, pixels_count):
-    old_fluxes = fluxes
-    old_pixels_count = pixels_count
-    fluxes, discrepancies, pixels_count, region_radius_values_pixel = integral_flux(x_values, y_values, [2 * r for r in region_radius_values], arcsec_per_pixel, data, F_INT_values)
-    new_fluxes = fluxes
-    new_pixels_count =  pixels_count
-    #print(old_pixels_count)
-    #print(old_fluxes)
-    #print(new_pixels_count)
-    #print(new_fluxes)
-
-    pixel_differences = []
-    for i in range(len(old_pixels_count)):
-        difference = new_pixels_count[i] - old_pixels_count[i]
-        pixel_differences.append(difference)
-    
-    fluxes_differences = []
-    for i in range(len(old_fluxes)):
-        difference = new_fluxes[i] - old_fluxes[i]
-        fluxes_differences.append(difference)
-    #print(pixel_differences)
-    #print(fluxes_differences)
-
-    background = []
-    for i in range(len(pixel_differences)):
-        mean = (1 / pixel_differences[i]) * fluxes_differences[i]
-
-        background.append(mean)
-    #print(background)
-
-    fluxes_background = []
-    for i in range(len(old_fluxes)):
-        difference = old_fluxes[i] - (background[i] * old_pixels_count[i])
-        fluxes_background.append(difference)
-    #print (fluxes_background)
-
-    discrepancies_backgoround = []
-    for i in range(len(discrepancies)):
-        discrepacy = fluxes_background[i] / F_INT_values[i]
-        discrepancies_backgoround.append(discrepacy)
-    #print(discrepancies_backgoround)
-
-    return background, fluxes_background, discrepancies_backgoround
-
-#Function to compare integral flux background (user inferface)
-def compare_integral_flux_background(F_INT_values, fluxes_background, discrepancies_backgoround):
-    table = [(F_INT_values[i], fluxes_background[i], discrepancies_backgoround[i]) for i in range(len(fluxes_background))]
-    df = pd.DataFrame(table, columns=["Theoretical integral fluxes", "Calculated integral fluxes with background", "Discrepancy"])    
-    print()
-    print(tabulate(df, headers="keys", tablefmt="grid", showindex=False, stralign="center"))
-
 #Function for plotting spctrum
 def plot_spectrum(ker_plot, c, cube_fits, x_values, y_values, region_radius_values_pixel, plot_file, data_freqs_file, data_velocities_file, data_freqs_pixel_file, data_velocities_pixel_file, position=None):
     x_value = x_values[ker_plot]
