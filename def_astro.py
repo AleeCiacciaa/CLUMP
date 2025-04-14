@@ -309,6 +309,58 @@ def compare_integral_flux_background(F_INT_values, fluxes_background, discrepanc
     print()
     print(tabulate(df, headers="keys", tablefmt="grid", showindex=False, stralign="center"))
 
+#Funcion for background
+def find_background(x_values, y_values, region_radius_values, arcsec_per_pixel, data, F_INT_values, fluxes, pixels_count):
+    old_fluxes = fluxes
+    old_pixels_count = pixels_count
+    fluxes, discrepancies, pixels_count, region_radius_values_pixel = integral_flux(x_values, y_values, [2 * r for r in region_radius_values], arcsec_per_pixel, data, F_INT_values)
+    new_fluxes = fluxes
+    new_pixels_count =  pixels_count
+    #print(old_pixels_count)
+    #print(old_fluxes)
+    #print(new_pixels_count)
+    #print(new_fluxes)
+
+    pixel_differences = []
+    for i in range(len(old_pixels_count)):
+        difference = new_pixels_count[i] - old_pixels_count[i]
+        pixel_differences.append(difference)
+    
+    fluxes_differences = []
+    for i in range(len(old_fluxes)):
+        difference = new_fluxes[i] - old_fluxes[i]
+        fluxes_differences.append(difference)
+    #print(pixel_differences)
+    #print(fluxes_differences)
+
+    background = []
+    for i in range(len(pixel_differences)):
+        mean = (1 / pixel_differences[i]) * fluxes_differences[i]
+
+        background.append(mean)
+    #print(background)
+
+    fluxes_background = []
+    for i in range(len(old_fluxes)):
+        difference = old_fluxes[i] - (background[i] * old_pixels_count[i])
+        fluxes_background.append(difference)
+    #print (fluxes_background)
+
+    discrepancies_backgoround = []
+    for i in range(len(discrepancies)):
+        discrepacy = fluxes_background[i] / F_INT_values[i]
+        discrepancies_backgoround.append(discrepacy)
+    #print(discrepancies_backgoround)
+
+    return background, fluxes_background, discrepancies_backgoround
+
+#Function to compare integral flux background (user inferface)
+def compare_integral_flux_background(F_INT_values, fluxes_background, discrepancies_backgoround):
+    table = [(F_INT_values[i], fluxes_background[i], discrepancies_backgoround[i]) for i in range(len(fluxes_background))]
+    df = pd.DataFrame(table, columns=["Theoretical integral fluxes", "Calculated integral fluxes with background", "Discrepancy"])    
+    print()
+    print(tabulate(df, headers="keys", tablefmt="grid", showindex=False, stralign="center"))
+
 #Function for plotting spctrum
 def plot_spectrum(ker_plot, c, cube_fits, x_values, y_values, region_radius_values_pixel, plot_file, data_freqs_file, data_velocities_file, data_freqs_pixel_file, data_velocities_pixel_file, position=None):
     x_value = x_values[ker_plot]
@@ -385,6 +437,7 @@ def plot_spectrum(ker_plot, c, cube_fits, x_values, y_values, region_radius_valu
     axes[1, 1].set_ylabel('Total Flux [K]')
     axes[1, 1].set_title(f'Total Integrated Spectrum\n({x_value}, {y_value})')
 
+    #Main plot, same of [0, 0] but bigger
     plt.tight_layout()
     plt.savefig(plot_file)
 
@@ -394,6 +447,43 @@ def plot_spectrum(ker_plot, c, cube_fits, x_values, y_values, region_radius_valu
     np.savetxt(data_velocities_pixel_file, np.column_stack((velocities, spectrum_pixel_K)), header="Velocity [km/s]    Flux for pixel [K]")
     plt.show()
     
+    plt.figure(figsize=(8, 6))
+
+    plt.plot(freqs_GHz, spectrum_mean_K, color='blue')
+    plt.xlabel('Observed Frequency [GHz]')
+    plt.ylabel('Flux Density [K]')
+    plt.title(f'Spectrum in Frequency\n({x_value}, {y_value})')
+    
+    plt.tight_layout()
+    plt.grid(True)
+    plt.show()
+
+    data_text = """\
+    UnitAngle : deg
+    UnitSpectral : Hz
+    UnitVelo : km/s
+    UnitInten : K
+    TempScale : TA*
+    Beammaj : 0.0
+    Beammin : 0.0
+    BeamPA : 0.0
+    """
+
+    with open(data_freqs_file, 'w') as f:
+        f.write(data_text + '\n') 
+        np.savetxt(f, np.column_stack((freqs, spectrum_sum_K)), header="Frequency [Hz]    Flux Density [K]", comments='')
+
+    with open(data_velocities_file, 'w') as f:
+        f.write(data_text + '\n')
+        np.savetxt(f, np.column_stack((velocities, spectrum_sum_K)), header="Velocity [km/s]    Flux Density [K]", comments='')
+
+    with open(data_freqs_pixel_file, 'w') as f:
+        f.write(data_text + '\n')
+        np.savetxt(f, np.column_stack((freqs, spectrum_pixel_K)), header="Frequency [Hz]    Flux for pixel [K]", comments='')
+
+    with open(data_velocities_pixel_file, 'w') as f:
+        f.write(data_text + '\n')
+        np.savetxt(f, np.column_stack((velocities, spectrum_pixel_K)), header="Velocity [km/s]    Flux for pixel [K]", comments='')
 
     print(f"\nPlot has been saved in: {plot_file}")
     print(f"\nData has been saved in: {data_freqs_file} & {data_velocities_file}")
