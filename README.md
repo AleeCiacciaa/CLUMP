@@ -41,6 +41,5 @@ A spectroscopic data cube ('combined-line-fits') is a three-dimensional structur
       opening the document. This is the only part of the programme that can be done by  
       entering a clump value other than the default one (for example try `100309`).
     - [6] Calculation of momentum 0, 1, 2: analysis concerning astrochemistry with the  
-      study of three molecules present in the brighter ker, already studied in the cube part.  
-      Specifically, the molecules studied through MADCUBA are H₂CO, SiO and CH₃CN.
+      study of three molecules present in the brighter ker, already studied in the cube part. Specifically, the molecules studied through MADCUBA are H₂CO, SiO and CH₃CN.
   
