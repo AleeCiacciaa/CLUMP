@@ -27,21 +27,21 @@ A spectroscopic data cube ('combined-line-fits') is a three-dimensional structur
 - **def_stro.py**: script with all the functions used in the study of the continuum and the cube, with a few additional contour functions for readability.
 - **cube_pb_fits.py**: script that allows PB correction of cube using a continuous file. It has been separated from the other scripts because it is much slower to run, as the data dubs are very heavy (~ 2'350'000 KB).
 - **user_interface**: script used to simplify the readability of the programme by dividing it into sections according to the type of analysis desired:
-      - [1] Continuous: continuous analysis of the clump of interest and study of its kers,     
-             identifying the regions that identify their position, specifically using SAOImage 
-             ds9. Finally, the integrated flow was studied and compared with the theoretical 
-             references in the table 'cat_7MTM2_ipac.txt'.
-      - [2] Cube: analysing the cube of the clump of interest and studying its brightest ker 
-             representing the spectrum of a certain spectral wind (0.1). From this 
-             representation, it was possible to proceed with the study of the peaks to identify 
-             the chemistry of the source using MADCUBA.
-      [3] Conitnuos and cube: both previous.
-      [4] Script cube pb correction: to run the 'cube_pb_fits.py' script separately.
-      [5] Reading table: to be able to read the columns in the table for a certain clump, 
-             specifying the unit and data type of a certain column, as it is not easy to read by 
-             opening the document. This is the only part of the programme that can be done by 
-             entering a clump value other than the default one (for exemple try 100309).
-      [6] Calculation of momentumn 0,1,2: analysis concerning astrochemistry with the study of 
-             three molecules present in the brighter ker, already studied in the cube part. 
-             Specifically, the molecules, studied through MADCUBA, are H2CO, SiO and CH3CN.
+    - [1] Continuous: continuous analysis of the clump of interest and study of its kers,  
+      identifying the regions that identify their position, specifically using SAOImage ds9.  
+      Finally, the integrated flow was studied and compared with the theoretical references  
+      in the table `cat_7MTM2_ipac.txt`.
+    - [2] Cube: analysing the cube of the clump of interest and studying its brightest ker  
+      representing the spectrum of a certain spectral wind (0.1). From this representation,  
+      it was possible to proceed with the study of the peaks to identify the chemistry of  
+      the source using MADCUBA.
+    - [3] Continuous and cube: both previous.
+    - [4] Script cube pb correction: to run the `cube_pb_fits.py` script separately.
+    - [5] Reading table: to be able to read the columns in the table for a certain clump,  
+      specifying the unit and data type of a certain column, as it is not easy to read by  
+      opening the document. This is the only part of the programme that can be done by  
+      entering a clump value other than the default one (for example try `100309`).
+    - [6] Calculation of momentum 0, 1, 2: analysis concerning astrochemistry with the  
+      study of three molecules present in the brighter ker, already studied in the cube part.  
+      Specifically, the molecules studied through MADCUBA are H₂CO, SiO and CH₃CN.
   
