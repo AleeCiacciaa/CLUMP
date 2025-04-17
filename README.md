@@ -27,11 +27,11 @@ A spectroscopic data cube ('combined-line-fits') is a three-dimensional structur
 - **def_stro.py**: script with all the functions used in the study of the continuum and the cube, with a few additional contour functions for readability.
 - **cube_pb_fits.py**: script that allows PB correction of cube using a continuous file. It has been separated from the other scripts because it is much slower to run, as the data dubs are very heavy (~ 2'350'000 KB).
 - **user_interface**: script used to simplify the readability of the programme by dividing it into sections according to the type of analysis desired:
-      [1] Continuous: continuous analysis of the clump of interest and study of its kers,     
+      - [1] Continuous: continuous analysis of the clump of interest and study of its kers,     
              identifying the regions that identify their position, specifically using SAOImage 
              ds9. Finally, the integrated flow was studied and compared with the theoretical 
-             references in the table 'cat_7MTM2_ipac.txt'.\\
-      [2] Cube: analysing the cube of the clump of interest and studying its brightest ker 
+             references in the table 'cat_7MTM2_ipac.txt'.
+      - [2] Cube: analysing the cube of the clump of interest and studying its brightest ker 
              representing the spectrum of a certain spectral wind (0.1). From this 
              representation, it was possible to proceed with the study of the peaks to identify 
              the chemistry of the source using MADCUBA.
