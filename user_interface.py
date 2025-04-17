@@ -22,6 +22,7 @@ from contextlib import redirect_stdout
 import config
 import os
 import subprocess
+import matplotlib.pyplot as plt
 
 def analisys():
     print("\nWhich analysis do you want to run:")
@@ -29,7 +30,8 @@ def analisys():
     print("[2] Cube")
     print("[3] Conitnuos and cube")
     print("[4] Script cube pb correction")
-    print("[5] Reading a table column")    
+    print("[5] Reading a table column")
+    print("[6] Calculation of momentumn 0,1,2")
     print("[0] Exit")
     return input("Select: ")
 
@@ -100,6 +102,55 @@ def main():
         column_name = input("\nName of the column you want to analysis: ")
         units_type(config.file_path, value_clump, column_name)
 
+    elif decision == "6":
+        print("\nSelect molecule: ")
+        print("[1] H2CO")
+        print("[2] SiO")
+        print("[3] CH3CN")
+        dec0 = input("Select: ")
+
+        if dec0 == "1":
+            mol = "H2CO"
+            nu_rest = 218.222192     #GHz
+            freq_min = 218.15        #GHz
+            freq_max = 218.16        #GHz
+            cube_fits = config.cube_fits_spw0
+            moment0_fits = config.moment0_H2CO_fits
+            moment1_fits = config.moment1_H2CO_fits
+            moment2_fits = config.moment2_H2CO_fits
+            sliced_cube_fits = config.sliced_cube_H2CO_fits
+
+        elif dec0 == "2":
+            mol = "SiO"
+            nu_rest = 217.10498      #GHz
+            freq_min = 217.02        #GHz
+            freq_max = 217.05        #GHz
+            cube_fits = config.cube_fits_spw0
+            moment0_fits = config.moment0_SiO_fits
+            moment1_fits = config.moment1_SiO_fits
+            moment2_fits = config.moment2_SiO_fits
+            sliced_cube_fits = config.sliced_cube_SiO_fits
+
+        elif dec0 == "3":
+            mol = "CH3CN"
+            nu_rest = 220.747261     #GHz
+            freq_min = 220.67        #GHz
+            freq_max = 220.68        #GHz
+            cube_fits = config.cube_fits_spw1
+            moment0_fits = config.moment0_CH3CN_fits
+            moment1_fits = config.moment1_CH3CN_fits
+            moment2_fits = config.moment2_CH3CN_fits
+            sliced_cube_fits = config.sliced_cube_CH3CN_fits
+
+        else:
+            print("Not valid answrer, try again.")
+     
+        print(f"\nFrequency range for the brightest peak of the {mol} molecule: {freq_min} - {freq_max} GHz.")
+        print(f"Nu rest for {mol} is set to {nu_rest} GHz.")
+        print("It may take few seconds.")
+        momentumn(cube_fits, freq_min, freq_max, config.c, nu_rest, moment0_fits, moment1_fits, moment2_fits, sliced_cube_fits)
+ 
+    
     elif decision == "0":
         print("Exit from the programme")
 
