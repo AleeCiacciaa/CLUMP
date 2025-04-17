@@ -13,3 +13,5 @@ This collection is designed to support theoretical investigation and provide a s
 - Sergio Molinari: ALMAGAL I. The ALMA evolutionary study of high-mass protocluster formation in the Galaxy
 
 - Martìn: Spectral Line Identification and Modelling (SLIM) in the MAdrid Data CUBe Analysis (MADCUBA) package.
+
+To stay up-to-date on new papers: https://arxiv.org/
