@@ -8,7 +8,6 @@ import time
 import numpy as np
 import sys
 
-
 def show_progress_bar(current, total, length=30):
     percent = int((current / total) * 100)
     bar = '#' * int((current / total) * length)
