@@ -29,8 +29,7 @@ A spectroscopic data cube ('combined-line-fits') is a three-dimensional structur
 - **user_interface**: script used to simplify the readability of the programme by dividing it into sections according to the type of analysis desired:
     - [1] Continuous: continuous analysis of the clump of interest and study of its kers,  
       identifying the regions that identify their position, specifically using SAOImage ds9.  
-      Finally, the integrated flow was studied and compared with the theoretical references  
-      in the table `cat_7MTM2_ipac.txt`.
+      Finally, the integrated flow was studied and compared with the theoretical references in the table `cat_7MTM2_ipac.txt`.
     - [2] Cube: analysing the cube of the clump of interest and studying its brightest ker  
       representing the spectrum of a certain spectral wind (0.1). From this representation,  
       it was possible to proceed with the study of the peaks to identify the chemistry of  
