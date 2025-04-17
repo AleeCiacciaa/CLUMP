@@ -5,6 +5,7 @@ from astropy.io import ascii
 from astropy.table import Table
 from tabulate import tabulate
 from astropy.wcs import FITSFixedWarning
+from spectral_cube import SpectralCube
 
 import astropy.units as u
 import os
@@ -224,7 +225,6 @@ def integral_flux(x_values, y_values, region_radius_values, arcsec_per_pixel, da
     #print("Calculated fluxes:", [float(f) for f in fluxes])
     return fluxes, discrepancies, pixels_count, region_radius_values_pixel
 
-
 #Funtion for creating region for ds9
 def file_create_region(x_values, y_values, region_radius_values_pixel, file_regionsds9):
     regions_text = """
@@ -416,23 +416,89 @@ def plot_spectrum(ker_plot, c, cube_fits, x_values, y_values, region_radius_valu
     Beammin : 0.0
     BeamPA : 0.0
     """
-
+    #To be read into the desired programme (MATCUBA) the header has to be empty
     with open(data_freqs_file, 'w') as f:
         f.write(data_text + '\n') 
-        np.savetxt(f, np.column_stack((freqs, spectrum_sum_K)), header="Frequency [Hz]    Flux Density [K]", comments='')
+        np.savetxt(f, np.column_stack((freqs, spectrum_sum_K)), header='', comments='')             #header = "Frequency [Hz]    Flux Density [K]"
 
     with open(data_velocities_file, 'w') as f:
         f.write(data_text + '\n')
-        np.savetxt(f, np.column_stack((velocities, spectrum_sum_K)), header="Velocity [km/s]    Flux Density [K]", comments='')
+        np.savetxt(f, np.column_stack((velocities, spectrum_sum_K)), header='', comments='')        #header="Velocity [km/s]    Flux Density [K]"
 
     with open(data_freqs_pixel_file, 'w') as f:
         f.write(data_text + '\n')
-        np.savetxt(f, np.column_stack((freqs, spectrum_pixel_K)), header="Frequency [Hz]    Flux for pixel [K]", comments='')
+        np.savetxt(f, np.column_stack((freqs, spectrum_pixel_K)), header='', comments='')           #header="Frequency [Hz]    Flux for pixel [K]"
 
     with open(data_velocities_pixel_file, 'w') as f:
         f.write(data_text + '\n')
-        np.savetxt(f, np.column_stack((velocities, spectrum_pixel_K)), header="Velocity [km/s]    Flux for pixel [K]", comments='')
+        np.savetxt(f, np.column_stack((velocities, spectrum_pixel_K)), header='', comments='')      #header="Velocity [km/s]    Flux for pixel [K]" 
 
     print(f"\nPlot has been saved in: {plot_file}")
     print(f"\nData has been saved in: {data_freqs_file} & {data_velocities_file}")
     print(f"\nData for each pixel has been saved in: {data_freqs_pixel_file} & {data_velocities_pixel_file}")
+
+#Function for momentumn 0,1
+def momentumn(cube_fits, freq_min, freq_max, c, nu_rest, moment0_fits, moment1_fits, moment2_fits, sliced_cube_fits):
+    freq_min *= 1e9
+    freq_max *= 1e9
+    nu_rest *= 1e9
+
+    with fits.open(cube_fits) as hdul:
+        cube_data = hdul[0].data
+        cube_header = hdul[0].header
+
+    n_freq = cube_data.shape[0]
+    ref_freq = cube_header['CRVAL3']    #Reference frequence (Hz)
+    step_freq = cube_header['CDELT3']   #Step (Hz)
+    ref_pixel = cube_header['CRPIX3']   #Reference pixels (=1.0)
+
+    freqs = ref_freq + (np.arange(n_freq) - (ref_pixel - 1)) * step_freq
+    
+    mask = (freqs >= freq_min) & (freqs <= freq_max)
+    selected_f = freqs[mask]
+
+    if selected_f.size < 2:
+        raise ValueError("Intervallo di frequenza troppo stretto o fuori dal range del cubo.")
+
+    selected_v = (c * 1e-3 * (nu_rest - selected_f)) / nu_rest    #km/s
+    delta_v = np.abs(np.mean(np.diff(selected_v)))
+
+    selected_data = cube_data[mask, :, :]
+
+    #print(f"\nSelected_v: {selected_v}")
+    #print(f"\nDelta_v : {delta_v}")
+
+    threshold = 1e-10 #minimum threshold
+
+    moment0 = np.nansum(selected_data, axis=0) * delta_v
+    moment0 = np.where(np.abs(moment0) < threshold, np.nan, moment0)
+    
+    vel_grid = selected_v[:, np.newaxis, np.newaxis]                #shape (chan, 1, 1)
+    weighted = selected_data * vel_grid                             #shape (chan, y, x)
+    num = np.nansum(weighted, axis=0) * delta_v                     #(y, x)
+    moment1 = np.where(np.isnan(moment0), np.nan, num / moment0)
+
+    selected_v_expanded = selected_v[:, np.newaxis, np.newaxis]
+    moment2 = np.nansum((selected_v_expanded - moment1)**2 * selected_data, axis=0) * delta_v / moment0
+
+    header2d = cube_header.copy()
+    for key in list(header2d.keys()):
+        if '3' in key: 
+            del header2d[key]
+
+    fits.writeto(sliced_cube_fits, selected_data.astype(np.float32), header=header2d, overwrite=True)
+    print(f"\nSliced cube.fits saved to: {sliced_cube_fits}")
+
+    header2d['BUNIT'] = 'Jy/beam.km/s'
+    fits.writeto(moment0_fits, moment0.astype(np.float32), header=header2d, overwrite=True)
+
+    header2d['BUNIT'] = 'km/s'
+    fits.writeto(moment1_fits, moment1.astype(np.float32), header=header2d, overwrite=True)
+
+    header2d['BUNIT'] = 'km/s'
+    fits.writeto(moment2_fits, moment2.astype(np.float32), header=header2d, overwrite=True)
+
+    print("\nNew files.fits have been saved here:")
+    print(f"Momentumn 0: {moment0_fits}.")
+    print(f"Momentumn 1: {moment1_fits}.")
+    print(f"Momentumn 2: {moment2_fits}.")
