@@ -13,7 +13,8 @@ from def_astro import (
     compare_integral_flux,
     find_background,
     compare_integral_flux_background,
-    plot_spectrum
+    plot_spectrum,
+    momentumn
 )
 
 import config
@@ -35,3 +36,4 @@ if __name__ == "__main__":
     background, fluxes_background, discrepancies_backgoround = find_background(x_values, y_values, region_radius_values, arcsec_per_pixel, data, F_INT_values, fluxes, pixels_count)
     compare_integral_flux_background(F_INT_values, fluxes_background, discrepancies_backgoround)
     plot_spectrum(config.ker_plot, config.c, config.cube_fits, x_values, y_values, region_radius_values_pixel, config.plot_file, config.data_freqs_file, config.data_velocities_file, config.data_freqs_pixel_file, config.data_velocities_pixel_file, position=None)
+    momentumn(config.cube_fits, config.freq_min, config.freq_max, config.c, config.nu_rest, config.moment0_fits, config.moment1_fits, config.sliced_cube_fits)
