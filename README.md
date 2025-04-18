@@ -1,5 +1,5 @@
 # Analysis of CLUMP and KER Data - Python Interface
-This project contains a set of Python scripts developed to analyse observational data related to the study of clumps and kerfs. The programme makes it possible to calculate emission moments, filter data according to frequency intervals, select regions of interest and produce visual and numerical output.
+This project contains a set of Python scripts developed to analyse observational data related to the study of clumps 124103 and its five kers. The programme makes it possible to calculate emission moments, filter data according to frequency intervals, select regions of interest and produce visual and numerical output.
 
 ## ALMAGAL
 The ALMAGAL project is a survey conducted with the ALMA radio telescope to observe star-forming regions. The observations were carried out with various antenna configurations, each with a different spatial resolution. As can be read in the papers in the 'reference paper' folder, the configurations vary depending on the type of data to be obtained:
@@ -13,6 +13,8 @@ The ALMAGAL project is a survey conducted with the ALMA radio telescope to obser
 The data used in this project involves joint deconvolution, which allows data from different configurations to be combined to obtain more accurate images. Specifically, 7m and TM2 were combined in a product called 7m+tm2 and balances the sensitivity of the extended structures of 7m with the good resolution of TM2 for studying clumps formation.
 The table 'cat_7MTM2_ipac.txt' used in this work originates from this 7m+TM2 configuration. It contains the continuum sources extracted from the combined dataset, which is particularly suitable for analysing the morphology and fragmentation of dense cores within star-forming clumps.
 
+For the analysis presented here, the clump 124103 was selected, along with its brightest ker, as it represents a clear example of a high-mass star-forming region with a well-defined structure visible in the 7m+TM2 data.
+
 ## File types used
 The programme works mainly with FITS files and is divided into two main parts, namely continuous and cube analysis.
 
@@ -20,10 +22,14 @@ A continuous file ('combined-cont-fits') represents the background emission depr
 
 A spectroscopic data cube ('combined-line-fits') is a three-dimensional structure (RA, Dec, Frequency) representing the emission of an astronomical source along the line of sight. Due to the decrease in sensitivity along the edges of the field of view caused by the measuring instruments themselves, such as radio telescopes or interferometers, a correction must be made. The Primary Beam (PB) correction allows the cube data to be normalised to reflect the true intensity of the observed sources over the entire field of view, including the edges. In order to make this correction, a continuum file is used which contains the continuous emission component and thus allows for the correct calibration with the primary beam.
 
-## MADCUBA SAOImage ds9
+## SAOImage ds9 and MADCUBA 
+This project was developed to optimise the analysis of the clump and its kers using two software packages:
+- SAOImage ds9: https://sites.google.com/cfa.harvard.edu/saoimageds9
+- MADCUBA: https://cab.inta-csic.es/madcuba/
 
+The continuum part was implemented using SAOImage DS9 for the visualisation and analysis of astronomical images in the continuum. DS9 allows the interactive exploration of FITS data, the manipulation of regions and the creation of RGB maps, making it possible to study the morphology and distribution of continuous radiation in stellar environments.
 
-
+The cube data part was planned using MADCUBA for the analysis of spectral cubes from star-forming regions. MADCUBA allows the identification of molecular lines, spectral fitting and the generation of momentum maps, in fact it is useful for studying the astrochemistry part, also using Splatalogue and the list of interstellar and circumstellar molecules.
 
 ## Scripts
 - **main_script.py**: main script in which the study of clump 124103 and the brightest ker inside it (ker number 4 for the numbering carried out) is performed by default. Instead, the astrochemical chemistry part is studied the H2CO molecule.
