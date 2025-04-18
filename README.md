@@ -53,11 +53,10 @@ The cube data part was planned using MADCUBA for the analysis of spectral cubes 
     - [6] Calculation of momentum 0, 1, 2: analysis concerning astrochemistry with the  
       study of three molecules present in the brighter ker, already studied in the cube part. Specifically, the molecules studied through MADCUBA are H₂CO, SiO and CH₃CN.
 
-
+## Requirements
 To run this programme, make sure you have Python installed (version 3.8 or higher recommended) and the following packages:
 
-## Requirements
-'''bash
+```bash
 pip install astropy
 pip install matplotlib
 pip install numpy
