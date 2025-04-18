@@ -11,6 +11,7 @@ The ALMAGAL project is a survey conducted with the ALMA radio telescope to obser
 - TM1: data with long baseline configurations of the 12-m array. Have the highest spatial resolution. Used in C-5 configuration for near sources, C-6 for far sources.
 
 The data used in this project involves joint deconvolution, which allows data from different configurations to be combined to obtain more accurate images. Specifically, 7m and TM2 were combined in a product called 7m+tm2 and balances the sensitivity of the extended structures of 7m with the good resolution of TM2 for studying clumps formation.
+The table 'cat_7MTM2_ipac.txt' used in this work originates from this 7m+TM2 configuration. It contains the continuum sources extracted from the combined dataset, which is particularly suitable for analysing the morphology and fragmentation of dense cores within star-forming clumps.
 
 ## File types used
 The programme works mainly with FITS files and is divided into two main parts, namely continuous and cube analysis.
@@ -19,7 +20,10 @@ A continuous file ('combined-cont-fits') represents the background emission depr
 
 A spectroscopic data cube ('combined-line-fits') is a three-dimensional structure (RA, Dec, Frequency) representing the emission of an astronomical source along the line of sight. Due to the decrease in sensitivity along the edges of the field of view caused by the measuring instruments themselves, such as radio telescopes or interferometers, a correction must be made. The Primary Beam (PB) correction allows the cube data to be normalised to reflect the true intensity of the observed sources over the entire field of view, including the edges. In order to make this correction, a continuum file is used which contains the continuous emission component and thus allows for the correct calibration with the primary beam.
 
-## Uploaded files
+## MADCUBA SAOImage ds9
+
+
+
 
 ## Scripts
 - **main_script.py**: main script in which the study of clump 124103 and the brightest ker inside it (ker number 4 for the numbering carried out) is performed by default. Instead, the astrochemical chemistry part is studied the H2CO molecule.
