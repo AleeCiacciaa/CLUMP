@@ -2,7 +2,7 @@
 This project contains a set of Python scripts developed to analyse observational data related to the study of clumps 124103 and its five kers. The programme makes it possible to calculate emission moments, filter data according to frequency intervals, select regions of interest and produce visual and numerical output.
 
 ## ALMAGAL
-The ALMAGAL project is a survey conducted with the ALMA radio telescope to observe star-forming regions. The observations were carried out with various antenna configurations, each with a different spatial resolution. As can be read in the papers in the 'reference paper' folder, the configurations vary depending on the type of data to be obtained:
+The ALMAGAL project is a survey conduced with the ALMA radio telescope to observe star-forming regions. The observations were carried out with various antenna configurations, each with a different spatial resolution. As can be read in the papers in the `reference paper` folder, the configurations vary depending on the type of data to be obtained:
 
 - 7m: data taken with the ACA (Atacama Compact Array). It is a set of 7-metre diameter antennas. It has low resolution but high sensitivity to extended structures (large, diffuse).
 
@@ -11,7 +11,7 @@ The ALMAGAL project is a survey conducted with the ALMA radio telescope to obser
 - TM1: data with long baseline configurations of the 12-m array. Have the highest spatial resolution. Used in C-5 configuration for near sources, C-6 for far sources.
 
 The data used in this project involves joint deconvolution, which allows data from different configurations to be combined to obtain more accurate images. Specifically, 7m and TM2 were combined in a product called 7m+tm2 and balances the sensitivity of the extended structures of 7m with the good resolution of TM2 for studying clumps formation.
-The table 'cat_7MTM2_ipac.txt' used in this work originates from this 7m+TM2 configuration. It contains the continuum sources extracted from the combined dataset, which is particularly suitable for analysing the morphology and fragmentation of dense cores within star-forming clumps.
+The table `cat_7MTM2_ipac.txt` used in this work originates from this 7m+TM2 configuration. It contains the continuum sources extracted from the combined dataset, which is particularly suitable for analysing the morphology and fragmentation of dense cores within star-forming clumps.
 
 For the analysis presented here, the clump 124103 was selected, along with its brightest ker, as it represents a clear example of a high-mass star-forming region with a well-defined structure visible in the 7m+TM2 data.
 
