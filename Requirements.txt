@@ -1,0 +1,7 @@
+pip install astropy
+pip install matplotlib
+pip install numpy
+pip install pandas
+pip install spectral-cube
+pip install pyregion
+pip install tabulate
