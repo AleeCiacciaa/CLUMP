@@ -1,4 +1,4 @@
-# CLUMP - ALMAGAL Continuum Data
+# CLUMP - ALMAGAL Continuous Data
 This repository contains scripts and data related to the analysis of continuous eission from ALMAGAL survey sources.
 If you have problems viewing the files in the `combined-cont-fits/almagal` path, you can download them at the link below.
 
