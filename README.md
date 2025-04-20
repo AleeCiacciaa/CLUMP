@@ -18,9 +18,9 @@ For the analysis presented here, the clump 124103 was selected, along with its b
 ## File types used
 The programme works mainly with FITS files and is divided into two main parts, namely continuous and cube analysis.
 
-A continuous file ('combined-cont-fits') represents the background emission deprived of spectral lines, in fact it is a two-dimensional map (RA, Dec) of the continuous and global emission of a certain source at certain frequencies.
+A continuous file (`combined-cont-fits`) represents the background emission deprived of spectral lines, in fact it is a two-dimensional map (RA, Dec) of the continuous and global emission of a certain source at certain frequencies.
 
-A spectroscopic data cube ('combined-line-fits') is a three-dimensional structure (RA, Dec, Frequency) representing the emission of an astronomical source along the line of sight. Due to the decrease in sensitivity along the edges of the field of view caused by the measuring instruments themselves, such as radio telescopes or interferometers, a correction must be made. The Primary Beam (PB) correction allows the cube data to be normalised to reflect the true intensity of the observed sources over the entire field of view, including the edges. In order to make this correction, a continuum file is used which contains the continuous emission component and thus allows for the correct calibration with the primary beam.
+A spectroscopic data cube (`combined-line-fits`) is a three-dimensional structure (RA, Dec, Frequency) representing the emission of an astronomical source along the line of sight. Due to the decrease in sensitivity along the edges of the field of view caused by the measuring instruments themselves, such as radio telescopes or interferometers, a correction must be made. The Primary Beam (PB) correction allows the cube data to be normalised to reflect the true intensity of the observed sources over the entire field of view, including the edges. In order to make this correction, a continuum file is used which contains the continuous emission component and thus allows for the correct calibration with the primary beam.
 
 ## SAOImage ds9 and MADCUBA 
 This project was developed to optimise the analysis of the clump and its kers using two software packages:
