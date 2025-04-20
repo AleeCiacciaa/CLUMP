@@ -11,12 +11,12 @@ The ALMAGAL project is a survey conduced with the ALMA radio telescope to observ
 - TM1: data with long baseline configurations of the 12-m array. Have the highest spatial resolution. Used in C-5 configuration for near sources, C-6 for far sources.
 
 The data used in this project involves joint deconvolution, which allows data from different configurations to be combined to obtain more accurate images. Specifically, 7m and TM2 were combined in a product called 7m+tm2 and balances the sensitivity of the extended structures of 7m with the good resolution of TM2 for studying clumps formation.
-The table `cat_7MTM2_ipac.txt` used in this work originates from this 7m+TM2 configuration. It contains the continuum sources extracted from the combined dataset, which is particularly suitable for analysing the morphology and fragmentation of dense cores within star-forming clumps.
+The table `cat_7MTM2_ipac.txt` used in this work originates from this 7m+TM2 configuration. It contains the continuous sources extracted from the combined dataset, which is particularly suitable for analysing the morphology and fragmentation of dense cores within star-forming clumps.
 
 For the analysis presented here, the clump 124103 was selected, along with its brightest ker, as it represents a clear example of a high-mass star-forming region with a well-defined structure visible in the 7m+TM2 data.
 
 ## File types used
-The programme works mainly with FITS files and is divided into two main parts, namely continuous and cube analysis.
+The program works mainly with FITS files and is divided into two main parts, namely continuous and cube analysis.
 
 A continuous file (`combined-cont-fits`) represents the background emission deprived of spectral lines, in fact it is a two-dimensional map (RA, Dec) of the continuous and global emission of a certain source at certain frequencies.
 
