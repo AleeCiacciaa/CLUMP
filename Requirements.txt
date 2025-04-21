@@ -1,3 +1,7 @@
+## Requirements
+To run this programme, make sure you have Python installed (version 3.8 or higher recommended) and the following packages:
+
+```bash
 pip install astropy
 pip install matplotlib
 pip install numpy
